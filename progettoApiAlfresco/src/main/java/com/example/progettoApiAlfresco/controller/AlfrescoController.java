@@ -57,14 +57,14 @@ public class AlfrescoController {
 
         @PostMapping(value = "/create")
         public NodeEntry CreateDirectory(
-                        @Parameter(name = "nodeId", description = "The identifier of a node. You can also use one of these well-known aliases:\n\n"
+                        @RequestParam(name = "nodeId", required = true) @Parameter(name = "nodeId", description = "The identifier of a node. You can also use one of these well-known aliases:\n\n"
                                         +
                                         "- **-my-**\n" +
                                         "- **-shared-**\n" +
                                         "- **-root-**") String nodeId,
-                        @RequestParam(required = false) @Parameter(name = "autoRename", description = "If true, then a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.") Boolean autoRename,
-                        @RequestParam(required = false) @Parameter(name = "majorVersion", description = "If true, then created node will be version 1.0 MAJOR. If false, then created node will be version 0.1 MINOR.") boolean majorVersion,
-                        @RequestParam(required = false) @Parameter(name = "versioningEnabled", description = "If true, then created node will be versioned. If false, then created node will be unversioned and auto-versioning disabled.") boolean versioningEnabled,
+                        @RequestParam(name = "autoRename", required = false) @Parameter(name = "autoRename", description = "If true, then a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.") Boolean autoRename,
+                        @RequestParam(name = "majorVersion", required = false) @Parameter(name = "majorVersion", description = "If true, then created node will be version 1.0 MAJOR. If false, then created node will be version 0.1 MINOR.") boolean majorVersion,
+                        @RequestParam(name = "versioningEnabled", required = false) @Parameter(name = "versioningEnabled", description = "If true, then created node will be versioned. If false, then created node will be unversioned and auto-versioning disabled.") boolean versioningEnabled,
                         @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "{\n  \"name\":\"My Folder\", \"nodeType\":\"cm:folder\" \n}") @RequestBody NodeDTO dto)
                         throws JsonMappingException, JsonProcessingException {
                 return alfrescoService.createDirectory(nodeId, autoRename, majorVersion, versioningEnabled, dto);
